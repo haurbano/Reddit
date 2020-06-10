@@ -1,0 +1,5 @@
+rootProject.name='Reddit'
+include ':app'
+include ':domain'
+include ':data'
+include ':presentation'
