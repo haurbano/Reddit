@@ -8,8 +8,10 @@ object RetrofitClient {
 
     private const val BASE_URL = "https://www.reddit.com/r/all/"
 
-    private val INSTANCE: Retrofit by lazy {
-        return@lazy Retrofit.Builder()
+    private var client: Retrofit
+
+    init {
+        client = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -17,6 +19,6 @@ object RetrofitClient {
     }
 
     fun <T> create(service: Class<T>): T {
-        return INSTANCE.create(service)
+        return client.create(service)
     }
 }

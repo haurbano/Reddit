@@ -1,18 +1,18 @@
 package com.haurbano.data.repositories
 
+import com.haurbano.data.datasources.PostRemoteDataSource
 import com.haurbano.data.datasources.ReadPostDataSource
 import com.haurbano.data.mappers.PostsMapper
-import com.haurbano.data.retrofit.PostsService
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.repositories.PostsRepository
 
 class PostsRepositoryImpl(
-    private val postsService: PostsService,
+    private val postDataSource: PostRemoteDataSource,
     private val readPostDataSource: ReadPostDataSource,
     private val postsMapper: PostsMapper
 ): PostsRepository {
     override suspend fun getPosts(): List<Post> {
-        val postsResponse = postsService.getPosts()
+        val postsResponse = postDataSource.getPosts()
         return postsMapper(postsResponse)
     }
 

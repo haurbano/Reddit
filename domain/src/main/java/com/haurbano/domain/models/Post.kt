@@ -1,7 +1,7 @@
 package com.haurbano.domain.models
 
 data class Post(
-    val id: Int,
+    val id: String,
     val title: String,
     val authorName: String,
     val entryDate: String,

@@ -14,8 +14,8 @@ class ReadPostDataSource(
         context.getSharedPreferences(READ_POSTS_PREFERENCES, Context.MODE_PRIVATE)
     }
 
-    fun isPostAlreadyRead(postId: Int): Boolean = sharedPreferences.contains(postId.toString())
+    fun isPostAlreadyRead(postId: String): Boolean = sharedPreferences.contains(postId)
 
-    fun addReadPost(postId: Int) = sharedPreferences.edit().putBoolean(postId.toString(), true)
+    fun addReadPost(postId: String) = sharedPreferences.edit().putBoolean(postId, true)
 
 }
