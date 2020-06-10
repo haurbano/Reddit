@@ -6,7 +6,7 @@ import com.haurbano.data.retrofit.PostsService
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.repositories.PostsRepository
 
-class PostRepositoriesImpl(
+class PostsRepositoryImpl(
     private val postsService: PostsService,
     private val readPostDataSource: ReadPostDataSource,
     private val postsMapper: PostsMapper
