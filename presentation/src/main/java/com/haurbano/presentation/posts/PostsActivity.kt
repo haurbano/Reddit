@@ -2,6 +2,9 @@ package com.haurbano.presentation.posts
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -83,5 +86,24 @@ class PostsActivity : AppCompatActivity() {
 
     private fun loadData() {
         viewModel.fetchPosts()
+    }
+
+    private fun removeAllItems() {
+        postAdapter.removeAllItems()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.post_activity_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.removeAllItemsMenu) {
+            removeAllItems()
+            true
+        } else {
+            return super.onOptionsItemSelected(item)
+        }
     }
 }

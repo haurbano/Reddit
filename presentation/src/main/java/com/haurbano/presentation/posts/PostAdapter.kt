@@ -78,6 +78,12 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
 
+    fun removeAllItems() {
+        items.clear()
+        notifyDataSetChanged()
+
+    }
+
     interface Listener {
         fun itemClicked(post: Post)
         fun itemRemoved(post: Post)
