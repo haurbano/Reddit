@@ -42,7 +42,23 @@ class PostsActivity : AppCompatActivity() {
             addItemDecoration(dividerItemDecoration)
         }
 
-        postAdapter.addListener { post -> checkPostAsRead(post) }
+        postAdapter.addListener(object : PostAdapter.Listener {
+            override fun itemClicked(post: Post) {
+                checkPostAsRead(post)
+            }
+
+            override fun itemRemoved(post: Post) {
+                removePost(post)
+            }
+
+        })
+    }
+
+    private fun removePost(post: Post) {
+        lifecycleScope.launch {
+            val isRemoved = viewModel.dismissPost(post)
+            if (isRemoved) postAdapter.dismissPost(post)
+        }
     }
 
     private fun checkPostAsRead(post: Post) {

@@ -6,7 +6,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val presentationModule = module {
-    viewModel { PostsViewModel(get(), get()) }
+    viewModel { PostsViewModel(get(), get(), get()) }
     factory { PostAdapter() }
 
 }

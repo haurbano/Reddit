@@ -1,7 +1,7 @@
 package com.haurbano.data.di
 
 import com.haurbano.data.datasources.PostRemoteDataSource
-import com.haurbano.data.datasources.ReadPostDataSource
+import com.haurbano.data.datasources.PostsLocalDataSource
 import com.haurbano.data.mappers.PostsMapper
 import com.haurbano.data.repositories.PostsRepositoryImpl
 import com.haurbano.data.retrofit.PostsService
@@ -14,7 +14,7 @@ val dataModule = module {
 
 
     single { PostRemoteDataSource(RetrofitClient.create(PostsService::class.java)) }
-    single { ReadPostDataSource(androidContext()) }
+    single { PostsLocalDataSource(androidContext()) }
 
     factory { PostsMapper() }
     factory<PostsRepository> { PostsRepositoryImpl(get(), get(), get()) }

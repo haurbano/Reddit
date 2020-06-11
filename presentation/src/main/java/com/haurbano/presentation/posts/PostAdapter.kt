@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_post.view.*
 
 class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     private var items = mutableListOf<Post>()
-    private val listeners = mutableListOf<(Post) -> Unit>()
+    private var listener: Listener? = null
 
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -35,28 +35,27 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
             //itemView.txtCreatedTime.text = post.entryDate
             itemView.setOnClickListener {
-                listeners.forEach { it(post) }
-                notifyItemChanged(items.indexOf(post))
+                listener?.itemClicked(post)
+            }
+
+            itemView.btnDismiss.setOnClickListener {
+                listener?.itemRemoved(post)
             }
         }
     }
 
-    fun addListener(listener: (Post) -> Unit) {
-        listeners.add(listener)
+    fun addListener(listener: Listener) {
+        this.listener = listener
     }
 
-    fun removeListeners() {
-        listeners.clear()
-    }
-
-    fun removePost(post: Post) {
-        items.remove(post)
+    fun dismissPost(post: Post) {
         val position = items.indexOf(post)
+        items.remove(post)
         notifyItemRemoved(position)
     }
 
     fun markAsRead(post: Post) {
-        val position = items.indexOf(post) + 1 // +1 to get position and not index
+        val position = items.indexOf(post)
         notifyItemChanged(position, post)
     }
 
@@ -74,4 +73,10 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
+
+    interface Listener {
+        fun itemClicked(post: Post)
+        fun itemRemoved(post: Post)
+    }
+
 }

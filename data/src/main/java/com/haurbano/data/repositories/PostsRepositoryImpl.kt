@@ -1,14 +1,14 @@
 package com.haurbano.data.repositories
 
 import com.haurbano.data.datasources.PostRemoteDataSource
-import com.haurbano.data.datasources.ReadPostDataSource
+import com.haurbano.data.datasources.PostsLocalDataSource
 import com.haurbano.data.mappers.PostsMapper
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.repositories.PostsRepository
 
 class PostsRepositoryImpl(
     private val postDataSource: PostRemoteDataSource,
-    private val readPostDataSource: ReadPostDataSource,
+    private val postsLocalDataSource: PostsLocalDataSource,
     private val postsMapper: PostsMapper
 ): PostsRepository {
     override suspend fun getPosts(): List<Post> {
@@ -16,14 +16,20 @@ class PostsRepositoryImpl(
         return postsMapper(postsResponse)
     }
 
-    override suspend fun markReadPosts(postList: List<Post>): List<Post> {
-        return postList.map { post ->
-            val isRead = readPostDataSource.isPostAlreadyRead(post.id)
-            post.apply { this.isRead = isRead }
-        }
+    override suspend fun checkPostAsRead(id: String): Boolean {
+        return postsLocalDataSource.addReadPost(id)
     }
 
-    override suspend fun checkPostAsRead(id: String): Boolean {
-        return readPostDataSource.addReadPost(id)
+    override suspend fun dismissPost(id: String): Boolean {
+        return postsLocalDataSource.dismissPost(id)
     }
+
+    override suspend fun isPostDismissed(id: String): Boolean {
+        return postsLocalDataSource.isPostDismissed(id)
+    }
+
+    override suspend fun isPostAlreadyRead(id: String): Boolean {
+        return postsLocalDataSource.isPostAlreadyRead(id)
+    }
+
 }
