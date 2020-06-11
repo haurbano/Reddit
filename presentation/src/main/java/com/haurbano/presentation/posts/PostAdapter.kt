@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
+import com.haurbano.presentation.transformation.CircleTransform
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_post.view.*
 
@@ -30,6 +31,9 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
             // show image
             Picasso.with(itemView.context)
                 .load(post.thumbnail)
+                .transform(CircleTransform())
+                .centerCrop()
+                .resize(210,210)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(itemView.imgPostList)
 

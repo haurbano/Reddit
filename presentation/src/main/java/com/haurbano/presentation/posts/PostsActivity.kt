@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
+import com.haurbano.presentation.postdetail.PostDetailsActivity
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -45,6 +46,7 @@ class PostsActivity : AppCompatActivity() {
         postAdapter.addListener(object : PostAdapter.Listener {
             override fun itemClicked(post: Post) {
                 checkPostAsRead(post)
+                navigateToPostDetails(post)
             }
 
             override fun itemRemoved(post: Post) {
@@ -52,6 +54,10 @@ class PostsActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun navigateToPostDetails(post: Post) {
+        PostDetailsActivity.start(this, post)
     }
 
     private fun removePost(post: Post) {
