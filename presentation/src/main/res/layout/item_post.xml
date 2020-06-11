@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp">
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/txtNewPost"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgPostList"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="TextView" />
 
@@ -25,29 +25,77 @@
         android:id="@+id/txtAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+        app:layout_constraintStart_toEndOf="@+id/imgPostList"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        tools:text="TextView" />
 
     <TextView
         android:id="@+id/txtCreatedTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNewPost"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtSeparatorAuthorAndDate"
+        app:layout_constraintStart_toEndOf="@+id/txtSeparatorAuthorAndDate"
+        app:layout_constraintTop_toTopOf="@+id/txtSeparatorAuthorAndDate"
         tools:text="TextView" />
 
     <TextView
         android:id="@+id/txtNewPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:text="@string/new_post"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSeparatorAuthorAndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="@+id/txtAuthor"
+        app:layout_constraintStart_toEndOf="@+id/txtAuthor"
+        app:layout_constraintTop_toTopOf="@+id/txtAuthor" />
+
+    <Button
+        android:id="@+id/btnDismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:drawableLeft="@drawable/ic_close_black"
+        android:drawablePadding="3dp"
+        android:text="@string/dismiss_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnComments"
+        app:layout_constraintTop_toBottomOf="@+id/txtCreatedTime" />
+
+    <Button
+        android:id="@+id/btnComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:drawableLeft="@drawable/ic_comments_black"
+        android:drawablePadding="3dp"
+        android:text="Comments"
+        app:layout_constraintEnd_toStartOf="@+id/btnDismiss"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imgPostList"
+        app:layout_constraintTop_toBottomOf="@+id/txtCreatedTime" />
+
+    <ImageView
+        android:id="@+id/imgPostList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 </androidx.constraintlayout.widget.ConstraintLayout>

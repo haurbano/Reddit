@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
@@ -35,8 +36,10 @@ class PostsActivity : AppCompatActivity() {
     private fun setupRecyclerViewPosts() {
         val linearLayoutManager = LinearLayoutManager(this)
         rvPosts.apply {
+            val dividerItemDecoration = DividerItemDecoration(this.context, linearLayoutManager.orientation)
             layoutManager = linearLayoutManager
             adapter = postAdapter
+            addItemDecoration(dividerItemDecoration)
         }
 
         postAdapter.addListener { post -> checkPostAsRead(post) }

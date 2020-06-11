@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_post.view.*
 
 class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
@@ -17,11 +18,21 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
         fun bind(post: Post) {
             itemView.txtAuthor.text = post.authorName
             itemView.txtTitle.text = post.title
+            itemView.btnComments.text = post.numberOfComments.toString()
+
+            // Mark as read
             if (post.isRead) {
                 itemView.txtNewPost.visibility = View.GONE
             } else {
                 itemView.txtNewPost.visibility = View.VISIBLE
             }
+
+            // show image
+            Picasso.with(itemView.context)
+                .load(post.thumbnail)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(itemView.imgPostList)
+
             //itemView.txtCreatedTime.text = post.entryDate
             itemView.setOnClickListener {
                 listeners.forEach { it(post) }
