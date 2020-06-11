@@ -22,4 +22,8 @@ class PostsRepositoryImpl(
             post.apply { this.isRead = isRead }
         }
     }
+
+    override suspend fun checkPostAsRead(id: String): Boolean {
+        return readPostDataSource.addReadPost(id)
+    }
 }

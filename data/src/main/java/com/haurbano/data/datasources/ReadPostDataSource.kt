@@ -16,6 +16,6 @@ class ReadPostDataSource(
 
     fun isPostAlreadyRead(postId: String): Boolean = sharedPreferences.contains(postId)
 
-    fun addReadPost(postId: String) = sharedPreferences.edit().putBoolean(postId, true)
+    fun addReadPost(postId: String): Boolean = sharedPreferences.edit().putBoolean(postId, true).commit()
 
 }

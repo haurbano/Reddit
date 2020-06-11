@@ -1,4 +1,4 @@
-package com.haurbano.domain
+package com.haurbano.domain.usecases
 
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.repositories.PostsRepository
