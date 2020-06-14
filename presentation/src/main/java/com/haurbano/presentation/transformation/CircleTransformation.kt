@@ -2,8 +2,9 @@ package com.haurbano.presentation.transformation
 
 import android.graphics.*
 import com.squareup.picasso.Transformation
+import javax.inject.Inject
 
-class CircleTransform : Transformation {
+class CircleTransform @Inject constructor() : Transformation {
     override fun transform(source: Bitmap): Bitmap {
         val size = Math.min(source.width, source.height)
         val x = (source.width - size) / 2

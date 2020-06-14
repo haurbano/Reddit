@@ -2,9 +2,11 @@ package com.haurbano.data.datasources
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class PostsLocalDataSource(
-    private val context: Context
+class PostsLocalDataSource @Inject constructor(
+    @ApplicationContext private val context: Context
 ) {
     companion object {
         const val READ_POSTS_PREFERENCES = "ReadPostPreferences"
