@@ -1,5 +1,7 @@
 package com.haurbano.domain.models
 
+import java.io.Serializable
+
 data class Post(
     val id: String,
     val title: String,
@@ -8,4 +10,4 @@ data class Post(
     val thumbnail: String,
     val numberOfComments: Int,
     var isRead: Boolean
-)
+) : Serializable

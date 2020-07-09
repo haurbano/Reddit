@@ -2,12 +2,16 @@ package com.haurbano.presentation.posts
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
+import com.haurbano.presentation.postdetail.PostDetailsActivity
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -45,6 +49,7 @@ class PostsActivity : AppCompatActivity() {
         postAdapter.addListener(object : PostAdapter.Listener {
             override fun itemClicked(post: Post) {
                 checkPostAsRead(post)
+                navigateToPostDetails(post)
             }
 
             override fun itemRemoved(post: Post) {
@@ -52,6 +57,10 @@ class PostsActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun navigateToPostDetails(post: Post) {
+        PostDetailsActivity.start(this, post)
     }
 
     private fun removePost(post: Post) {
@@ -77,5 +86,24 @@ class PostsActivity : AppCompatActivity() {
 
     private fun loadData() {
         viewModel.fetchPosts()
+    }
+
+    private fun removeAllItems() {
+        postAdapter.removeAllItems()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.post_activity_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.removeAllItemsMenu) {
+            removeAllItems()
+            true
+        } else {
+            return super.onOptionsItemSelected(item)
+        }
     }
 }
