@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.haurbano.domain.common.Resource
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
 import com.haurbano.presentation.postdetail.PostDetailsActivity
@@ -78,10 +80,25 @@ class PostsActivity : AppCompatActivity() {
     }
 
     private fun listenViewModelChanges() {
-        viewModel.posts.observe(this, Observer { posts ->
-            refreshPosts.isRefreshing = false
-            postAdapter.replaceItems(posts)
+        viewModel.posts.observe(this, Observer { resource ->
+            when(resource) {
+                is Resource.Success -> {
+                    refreshPosts.isRefreshing = false
+                    postAdapter.replaceItems(resource.successData)
+                }
+                is Resource.Error -> {
+                    refreshPosts.isRefreshing = false
+                    showMessage(R.string.msg_error_loading_posts)
+                }
+                is Resource.Progress -> {
+                    refreshPosts.isRefreshing = true
+                }
+            }
         })
+    }
+
+    private fun showMessage(message: Int) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     private fun loadData() {
