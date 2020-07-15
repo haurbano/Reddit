@@ -5,8 +5,8 @@ import com.haurbano.domain.common.Resource
 import java.io.IOException
 import java.lang.Exception
 
-class IOErrorHandlerRepository: ErrorHandlerRepository {
-    override suspend fun <T> handlerErrors(task: suspend () -> Resource<T>): Resource<T> {
+class IOErrorHandler: ErrorHandler {
+    override suspend fun <T> handleErrors(task: suspend () -> Resource<T>): Resource<T> {
         return try {
             task()
         } catch (exc: IOException) {
@@ -15,5 +15,4 @@ class IOErrorHandlerRepository: ErrorHandlerRepository {
             Resource.Error<T>(ErrorEntity.UnknownError)
         }
     }
-
 }

@@ -3,5 +3,5 @@
     <string name="new_post">NEW</string>
     <string name="dismiss_btn">Dismiss</string>
     <string name="remove_all_items">Remove All Items</string>
-    <string name="msg_error_loading_posts">Unable to et the posts</string>
+    <string name="msg_error_loading_posts">Unable to get the posts</string>
 </resources>

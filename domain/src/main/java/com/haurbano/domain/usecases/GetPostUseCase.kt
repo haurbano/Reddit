@@ -11,9 +11,9 @@ class GetPostUseCase(
         return postsRepository.getPosts().apply {
             data?.map { post ->
                     val isRead = postsRepository.isPostAlreadyRead(post.id)
-                    post.apply { this.isRead = isRead }
+                    post.apply { this.isRead = isRead.data ?: false }
                 }?.filter { post ->
-                    val isPostDismissed = postsRepository.isPostDismissed(post.id)
+                    val isPostDismissed = postsRepository.isPostDismissed(post.id).data ?: false
                     !isPostDismissed
                 }
         }

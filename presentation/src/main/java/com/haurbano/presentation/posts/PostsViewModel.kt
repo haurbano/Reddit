@@ -29,8 +29,8 @@ class PostsViewModel(
         }
     }
 
-    suspend fun checkPostAsRead(post: Post): Boolean {
-        val postChange = CompletableDeferred<Boolean>()
+    suspend fun checkPostAsRead(post: Post): Resource<Boolean> {
+        val postChange = CompletableDeferred<Resource<Boolean>>()
 
         viewModelScope.launch {
             val result = checkPostAsReadUseCase(post.id)
@@ -40,8 +40,8 @@ class PostsViewModel(
         return postChange.await()
     }
 
-    suspend fun dismissPost(post: Post): Boolean {
-        val postRemoved = CompletableDeferred<Boolean>()
+    suspend fun dismissPost(post: Post): Resource<Boolean> {
+        val postRemoved = CompletableDeferred<Resource<Boolean>>()
         viewModelScope.launch {
             val result = dismissPostUseCase(post.id)
             postRemoved.complete(result)

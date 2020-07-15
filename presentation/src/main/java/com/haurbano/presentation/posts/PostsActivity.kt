@@ -57,7 +57,6 @@ class PostsActivity : AppCompatActivity() {
             override fun itemRemoved(post: Post) {
                 removePost(post)
             }
-
         })
     }
 
@@ -68,14 +67,14 @@ class PostsActivity : AppCompatActivity() {
     private fun removePost(post: Post) {
         lifecycleScope.launch {
             val isRemoved = viewModel.dismissPost(post)
-            if (isRemoved) postAdapter.dismissPost(post)
+            if (isRemoved.data == true) postAdapter.dismissPost(post)
         }
     }
 
     private fun checkPostAsRead(post: Post) {
         lifecycleScope.launch {
             val isChanged = viewModel.checkPostAsRead(post)
-            if (isChanged) postAdapter.markAsRead(post.apply { isRead = true })
+            if (isChanged.data == true) postAdapter.markAsRead(post.apply { isRead = true })
         }
     }
 
