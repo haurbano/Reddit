@@ -47,7 +47,6 @@ data class PostsRequestResponse(
                 val distinguished: Any,
                 val domain: String,
                 val downs: Int,
-                val edited: Boolean,
                 val gilded: Int,
                 val gildings: Gildings,
                 val hidden: Boolean,
