@@ -9,4 +9,5 @@ interface PostsRepository {
     suspend fun dismissPost(id: String): Resource<Boolean>
     suspend fun isPostDismissed(id: String): Resource<Boolean>
     suspend fun isPostAlreadyRead(id: String): Resource<Boolean>
+    suspend fun getMorePosts(): Resource<List<Post>>
 }

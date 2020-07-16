@@ -21,5 +21,5 @@ val dataModule = module {
     factory <ErrorHandler>{ IOErrorHandler() }
 
     factory { PostsMapper() }
-    factory<PostsRepository> { PostsRepositoryImpl(get(), get(), get(), get()) }
+    factory <PostsRepository> { PostsRepositoryImpl(get(), get(), get(), get()) }
 }

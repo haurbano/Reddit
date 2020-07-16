@@ -3,6 +3,7 @@ package com.haurbano.data.datasources
 import android.content.Context
 import android.content.SharedPreferences
 import com.haurbano.domain.common.Resource
+import com.haurbano.domain.models.Post
 
 class PostsLocalDataSource(
     private val context: Context
@@ -11,6 +12,11 @@ class PostsLocalDataSource(
         const val READ_POSTS_PREFERENCES = "ReadPostPreferences"
         const val REMOVED_POSTS_PREFERENCES = "RemovedPostPreferences"
     }
+
+
+    val memoryCache = mutableListOf<Post>()
+    var lastAfterKey: String? = null
+
 
     private val readPostSharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences(READ_POSTS_PREFERENCES, Context.MODE_PRIVATE)

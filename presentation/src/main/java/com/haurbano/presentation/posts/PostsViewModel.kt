@@ -8,6 +8,7 @@ import com.haurbano.domain.common.Resource
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.usecases.CheckPostAsReadUseCase
 import com.haurbano.domain.usecases.DismissPostUseCase
+import com.haurbano.domain.usecases.GetMorePostsUseCase
 import com.haurbano.domain.usecases.GetPostUseCase
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.launch
@@ -15,8 +16,10 @@ import kotlinx.coroutines.launch
 class PostsViewModel(
     private val getPostUseCase: GetPostUseCase,
     private val checkPostAsReadUseCase: CheckPostAsReadUseCase,
-    private val dismissPostUseCase: DismissPostUseCase
+    private val dismissPostUseCase: DismissPostUseCase,
+    private val getMorePostsUseCase: GetMorePostsUseCase
 ): ViewModel() {
+    private var loadingMorePosts = false
     private val _posts: MutableLiveData<Resource<List<Post>>> = MutableLiveData()
 
     val posts: LiveData<Resource<List<Post>>>
@@ -48,6 +51,19 @@ class PostsViewModel(
         }
 
         return postRemoved.await()
+    }
+
+    fun listScrolled(visibleItemCount: Int, lastVisibleItem: Int, totalItemCount: Int) {
+        if (loadingMorePosts) return
+
+        if (visibleItemCount + lastVisibleItem >= totalItemCount) {
+            viewModelScope.launch {
+                loadingMorePosts = true
+                val result = getMorePostsUseCase()
+                _posts.postValue(result)
+                loadingMorePosts = false
+            }
+        }
     }
 
 }

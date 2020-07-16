@@ -1,5 +1,6 @@
 package com.haurbano.data.repositories
 
+import android.util.Log
 import com.haurbano.data.datasources.PostRemoteDataSource
 import com.haurbano.data.datasources.PostsLocalDataSource
 import com.haurbano.data.mappers.PostsMapper
@@ -19,8 +20,24 @@ class PostsRepositoryImpl(
 
     override suspend fun getPosts(): Resource<List<Post>> = withContext(Dispatchers.IO) {
         handleErrors {
+            postsLocalDataSource.memoryCache.clear()
             val postsResponse = postDataSource.getPosts()
-            Resource.Success(postsMapper(postsResponse))
+            postsLocalDataSource.lastAfterKey = postsResponse.data.after
+            val newPosts = postsMapper(postsResponse)
+            postsLocalDataSource.memoryCache.addAll(newPosts)
+            Resource.Success(postsLocalDataSource.memoryCache.toList())
+        }
+    }
+
+    override suspend fun getMorePosts(): Resource<List<Post>> = withContext(Dispatchers.IO) {
+        handleErrors {
+            postsLocalDataSource.lastAfterKey?.let {
+                val newPosts = postDataSource.getMorePost(it)
+                val mappedNewPosts = postsMapper(newPosts)
+                postsLocalDataSource.memoryCache.addAll(mappedNewPosts)
+                Log.d("More Posts", "Current post size: ${postsLocalDataSource.memoryCache.size}")
+                Resource.Success(postsLocalDataSource.memoryCache.toList())
+            } ?: Resource.Success<List<Post>>(postsLocalDataSource.memoryCache.toList())
         }
     }
 
