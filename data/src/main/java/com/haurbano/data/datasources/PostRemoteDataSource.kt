@@ -8,4 +8,7 @@ class PostRemoteDataSource(
 ) {
     suspend fun getPosts(): PostsRequestResponse =
         postsService.getPosts()
+
+    suspend fun getMorePost(afterKey: String): PostsRequestResponse =
+        postsService.getMorePosts(afterKey = afterKey)
 }

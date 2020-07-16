@@ -35,5 +35,4 @@ class PostsLocalDataSource(
     fun isPostDismissed(postId: String): Resource<Boolean> = Resource.Success(
         removedPostSharedPreferences.contains(postId)
     )
-
 }
