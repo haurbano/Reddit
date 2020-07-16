@@ -9,5 +9,7 @@ data class Post(
     val entryDate: String,
     val thumbnail: String,
     val numberOfComments: Int,
-    var isRead: Boolean
+    var isRead: Boolean,
+    var image: String,
+    var text: String?
 ) : Serializable

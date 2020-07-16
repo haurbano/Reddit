@@ -13,11 +13,13 @@ class PostsMapper {
             val newPost = Post(
                 id = post.id,
                 title = post.title,
-                authorName = post.author_fullname,
+                authorName = post.author,
                 numberOfComments = post.num_comments,
                 isRead = false,
                 thumbnail = post.thumbnail,
-                entryDate = createdToDisplayDate(post.created_utc)
+                entryDate = createdToDisplayDate(post.created_utc),
+                image = children.data.preview.images[0].source.url,
+                text = children.data.author_flair_text
             )
 
             postList.add(newPost)

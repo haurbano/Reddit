@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_post_details.*
+import kotlinx.android.synthetic.main.item_post.*
 
 class PostDetailsActivity : AppCompatActivity() {
 
@@ -25,6 +27,11 @@ class PostDetailsActivity : AppCompatActivity() {
         val post = intent.getSerializableExtra(POST_KEY) as Post?
         post?.let {
             txtPostTile.text = it.title
+            txtDetailAuthor.text = it.authorName
+            txtDetailText.text = it.text
+            Picasso.with(this)
+                .load(it.thumbnail)
+                .into(imgDetailPost)
         }
     }
 }

@@ -26,7 +26,7 @@ data class PostsRequestResponse(
                 val author_flair_css_class: Any,
                 val author_flair_richtext: List<Any>,
                 val author_flair_template_id: Any,
-                val author_flair_text: Any,
+                val author_flair_text: String,
                 val author_flair_text_color: Any,
                 val author_flair_type: String,
                 val author_fullname: String,
