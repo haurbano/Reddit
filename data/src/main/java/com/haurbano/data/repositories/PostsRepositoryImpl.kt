@@ -36,6 +36,7 @@ class PostsRepositoryImpl(
                 val mappedNewPosts = postsMapper(newPosts)
                 postsLocalDataSource.memoryCache.addAll(mappedNewPosts)
                 Log.d("More Posts", "Current post size: ${postsLocalDataSource.memoryCache.size}")
+                postsLocalDataSource.lastAfterKey = newPosts.data.after
                 Resource.Success(postsLocalDataSource.memoryCache.toList())
             } ?: Resource.Success<List<Post>>(postsLocalDataSource.memoryCache.toList())
         }

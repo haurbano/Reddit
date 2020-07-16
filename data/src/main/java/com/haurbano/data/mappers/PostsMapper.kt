@@ -7,6 +7,7 @@ import java.util.*
 class PostsMapper {
     private val postList = mutableListOf<Post>()
     operator fun invoke(postsRequestResponse: PostsRequestResponse): List<Post> {
+        postList.clear()
         postsRequestResponse.data.children.map { children ->
             val post = children.data
             val newPost = Post(

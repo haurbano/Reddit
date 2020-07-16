@@ -56,7 +56,7 @@ class PostsViewModel(
     fun listScrolled(visibleItemCount: Int, lastVisibleItem: Int, totalItemCount: Int) {
         if (loadingMorePosts) return
 
-        if (visibleItemCount + lastVisibleItem >= totalItemCount) {
+        if (visibleItemCount + lastVisibleItem + 2 >= totalItemCount && totalItemCount > 0) {
             viewModelScope.launch {
                 loadingMorePosts = true
                 val result = getMorePostsUseCase()
