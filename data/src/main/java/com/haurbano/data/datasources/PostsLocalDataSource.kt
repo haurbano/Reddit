@@ -2,6 +2,8 @@ package com.haurbano.data.datasources
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.haurbano.domain.common.Resource
+import com.haurbano.domain.models.Post
 
 class PostsLocalDataSource(
     private val context: Context
@@ -11,6 +13,11 @@ class PostsLocalDataSource(
         const val REMOVED_POSTS_PREFERENCES = "RemovedPostPreferences"
     }
 
+
+    val memoryCache = mutableListOf<Post>()
+    var lastAfterKey: String? = null
+
+
     private val readPostSharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences(READ_POSTS_PREFERENCES, Context.MODE_PRIVATE)
     }
@@ -19,12 +26,19 @@ class PostsLocalDataSource(
         context.getSharedPreferences(REMOVED_POSTS_PREFERENCES, Context.MODE_PRIVATE)
     }
 
-    fun isPostAlreadyRead(postId: String): Boolean = readPostSharedPreferences.contains(postId)
+    fun isPostAlreadyRead(postId: String): Resource<Boolean> = Resource.Success(
+        readPostSharedPreferences.contains(postId)
+    )
 
-    fun addReadPost(postId: String): Boolean = readPostSharedPreferences.edit().putBoolean(postId, true).commit()
+    fun addReadPost(postId: String): Resource<Boolean> = Resource.Success(
+        readPostSharedPreferences.edit().putBoolean(postId, true).commit()
+    )
 
-    fun dismissPost(postId: String): Boolean = removedPostSharedPreferences.edit().putBoolean(postId, true).commit()
+    fun dismissPost(postId: String): Resource<Boolean> = Resource.Success(
+        removedPostSharedPreferences.edit().putBoolean(postId, true).commit()
+    )
 
-    fun isPostDismissed(postId: String): Boolean = removedPostSharedPreferences.contains(postId)
-
+    fun isPostDismissed(postId: String): Resource<Boolean> = Resource.Success(
+        removedPostSharedPreferences.contains(postId)
+    )
 }
