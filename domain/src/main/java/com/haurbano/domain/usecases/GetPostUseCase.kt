@@ -2,8 +2,9 @@ package com.haurbano.domain.usecases
 
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.repositories.PostsRepository
+import javax.inject.Inject
 
-class GetPostUseCase(
+class GetPostUseCase @Inject constructor(
     private val postsRepository: PostsRepository
 ) {
     suspend fun getPosts(): List<Post> {

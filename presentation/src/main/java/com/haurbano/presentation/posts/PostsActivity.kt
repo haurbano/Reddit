@@ -1,30 +1,37 @@
 package com.haurbano.presentation.posts
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haurbano.domain.models.Post
 import com.haurbano.presentation.R
 import com.haurbano.presentation.postdetail.PostDetailsActivity
+import com.haurbano.presentation.viewmodelfactory.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class PostsActivity : AppCompatActivity() {
 
-    private val viewModel: PostsViewModel by viewModel()
-    private val postAdapter: PostAdapter by inject()
+    @Inject lateinit var postAdapter: PostAdapter
+    @Inject lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var viewModel: PostsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(PostsViewModel::class.java)
         listenViewModelChanges()
         listenViewListeners()
         setupRecyclerViewPosts()

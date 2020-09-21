@@ -5,8 +5,9 @@ import com.haurbano.data.datasources.PostsLocalDataSource
 import com.haurbano.data.mappers.PostsMapper
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.repositories.PostsRepository
+import javax.inject.Inject
 
-class PostsRepositoryImpl(
+class PostsRepositoryImpl @Inject constructor(
     private val postDataSource: PostRemoteDataSource,
     private val postsLocalDataSource: PostsLocalDataSource,
     private val postsMapper: PostsMapper

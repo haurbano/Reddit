@@ -3,8 +3,9 @@ package com.haurbano.data.mappers
 import com.haurbano.data.models.PostsRequestResponse
 import com.haurbano.domain.models.Post
 import java.util.*
+import javax.inject.Inject
 
-class PostsMapper {
+class PostsMapper @Inject constructor() {
     private val postList = mutableListOf<Post>()
     operator fun invoke(postsRequestResponse: PostsRequestResponse): List<Post> {
         postsRequestResponse.data.children.map { children ->

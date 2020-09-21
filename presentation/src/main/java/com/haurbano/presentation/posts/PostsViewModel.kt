@@ -1,19 +1,20 @@
 package com.haurbano.presentation.posts
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.haurbano.domain.usecases.GetPostUseCase
 import com.haurbano.domain.models.Post
 import com.haurbano.domain.usecases.CheckPostAsReadUseCase
 import com.haurbano.domain.usecases.DismissPostUseCase
+import com.haurbano.domain.usecases.GetPostUseCase
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PostsViewModel(
+class PostsViewModel @ViewModelInject constructor(
     private val getPostUseCase: GetPostUseCase,
     private val checkPostAsReadUseCase: CheckPostAsReadUseCase,
     private val dismissPostUseCase: DismissPostUseCase

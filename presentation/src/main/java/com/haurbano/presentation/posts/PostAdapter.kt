@@ -9,8 +9,11 @@ import com.haurbano.presentation.R
 import com.haurbano.presentation.transformation.CircleTransform
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_post.view.*
+import javax.inject.Inject
 
-class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter @Inject constructor(
+    private val circleTransformation: CircleTransform
+): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     private var items = mutableListOf<Post>()
     private var listener: Listener? = null
 
@@ -31,7 +34,7 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
             // show image
             Picasso.with(itemView.context)
                 .load(post.thumbnail)
-                .transform(CircleTransform())
+                .transform(circleTransformation)
                 .centerCrop()
                 .resize(210,210)
                 .placeholder(R.drawable.ic_launcher_foreground)
